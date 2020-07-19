@@ -1,0 +1,61 @@
+#%RAML 1.0
+title: muleinsurance-experience-api
+version: 1.0.0
+
+traits:
+  client-id-required:
+    headers:
+      client_id:
+        type: string
+        required: true
+      client_secret:
+        type: string
+        required: true
+       
+    responses:
+      401:
+        description: Unauthorized, The client_id or client_secret are not valid or the client does not have access.
+      404:
+        description: No Record found.
+      429:
+        description: The client used all of it's request quota for the current period.
+      500:
+        description: Server error ocurred
+      503:
+        description: Contracts Information Unreachable.
+/demoapi:
+  /{searchString}:
+      get:
+        description: invokes either customer or policy request
+        queryParameters:
+          fname:
+            description: first name
+            example: Sumitra
+            required: false
+            type: string
+          lname:
+            description: Last name
+            example: Ojha
+            required: false
+            type: string
+          dob:
+            description: Date of Birth
+            example: 1/2/2003
+            required: false
+            type: string
+          customerID:
+            description: CustomerID
+            example: BU79786
+            required: false
+            type: string
+          policytype:
+            description: type of policy taken
+            example: Personal Auto
+            required: false
+            type: string            
+        responses:
+          200:
+            body:
+              application/json:
+                example: 
+                  {"message": "connecting to System API"}

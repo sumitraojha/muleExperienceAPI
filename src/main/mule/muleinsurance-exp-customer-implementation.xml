@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:request-config name="HTTP_Request_configuration17" doc:name="HTTP Request configuration" doc:id="ae6c764d-0ede-470e-a8de-19ca05e10737" >
+		<http:request-connection host="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" connectionIdleTimeout="300000" />
+	</http:request-config>
+	<http:request-config name="HTTP_Request_configuration16" doc:name="HTTP Request configuration" doc:id="147857a4-7bec-4802-9a3b-f3c609344634" >
+		<http:request-connection host="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" connectionIdleTimeout="300000" />
+	</http:request-config>
+	<http:request-config name="HTTP_Request_configuration15" doc:name="HTTP Request configuration" doc:id="84257407-8506-4ae2-beb7-09e631f5cd56" >
+		<http:request-connection host="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" connectionIdleTimeout="300000" />
+	</http:request-config>
+	<http:request-config name="HTTP_Request_configuration14" doc:name="HTTP Request configuration" doc:id="c5c772ee-964c-428c-8465-a30a02153aab" >
+		<http:request-connection host="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" connectionIdleTimeout="300000" />
+	</http:request-config>
+	<http:request-config name="HTTP_Request_configuration13" doc:name="HTTP Request configuration" doc:id="a776dcb7-15c7-494a-9a06-a422990f763c" >
+		<http:request-connection host="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" connectionIdleTimeout="300000" />
+	</http:request-config>
+	<http:request-config name="HTTP_Request_configuration12" doc:name="HTTP Request configuration" doc:id="6acafd9b-32ff-4d4a-9fdd-eb69d63b04b5" >
+		<http:request-connection host="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" connectionIdleTimeout="300000" />
+	</http:request-config>
+	<http:request-config name="HTTP_Request_configuration11" doc:name="HTTP Request configuration" doc:id="c9d275e7-59c1-4cd6-aeb8-5bf036ca0435" >
+		<http:request-connection host="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" connectionIdleTimeout="300000" />
+	</http:request-config>
+	<flow name="muleinsurance-exp-implementationFlow17" doc:id="fd1dec5e-a45a-4f31-917d-f563b4195189" >
+		<http:request method="GET" doc:name="Request" doc:id="0037fb97-bd6a-4834-88af-890c28628d3e" url="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" config-ref="HTTP_Request_configuration17">
+					<http:query-params><![CDATA[#[output application/java
+---
+{
+	dob : vars.dob
+}]]]></http:query-params>
+				</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="4cbee3c1-a69b-4a11-9b2c-7c033bca9ea8">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	CustomerID: payload01.CustomerID,
+	first_name: payload01.first_name,
+	last_name: payload01.last_name,
+	DOB: payload01.DOB,
+	company_name: payload01.company_name,
+	address: payload01.address,
+	city: payload01.city,
+	county: payload01.county,
+	state: payload01.state,
+	zip: payload01.zip,
+	phone1: payload01.phone1
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+	</flow>
+	<flow name="muleinsurance-exp-implementationFlow16" doc:id="eab7b4ab-bf2e-4821-b6a6-cf2d66ced8e4" >
+		<http:request method="GET" doc:name="Request" doc:id="3465867b-3000-4d5f-b68a-3f7ce9563d95" url="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" config-ref="HTTP_Request_configuration16">
+					<http:query-params><![CDATA[#[output application/java
+---
+{
+	lname : vars.lname
+}]]]></http:query-params>
+				</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="cffbdd7c-d92f-4ce1-8e7b-81761b31c662">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	CustomerID: payload01.CustomerID,
+	first_name: payload01.first_name,
+	last_name: payload01.last_name,
+	DOB: payload01.DOB,
+	company_name: payload01.company_name,
+	address: payload01.address,
+	city: payload01.city,
+	county: payload01.county,
+	state: payload01.state,
+	zip: payload01.zip,
+	phone1: payload01.phone1
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+	</flow>
+	<flow name="muleinsurance-exp-implementationFlow15" doc:id="f175b400-ff6d-4d9a-a913-1194de647911" >
+		<http:request method="GET" doc:name="Request" doc:id="1d19167f-0b84-4fec-9b31-8e848dff3cdc" url="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" config-ref="HTTP_Request_configuration15">
+					<http:query-params><![CDATA[#[output application/java
+---
+{
+	fname : vars.fname
+}]]]></http:query-params>
+				</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="e9716ec8-02ea-4f3e-8eca-91cebeb12182">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	CustomerID: payload01.CustomerID,
+	first_name: payload01.first_name,
+	last_name: payload01.last_name,
+	DOB: payload01.DOB,
+	company_name: payload01.company_name,
+	address: payload01.address,
+	city: payload01.city,
+	county: payload01.county,
+	state: payload01.state,
+	zip: payload01.zip,
+	phone1: payload01.phone1
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+	</flow>
+	<flow name="muleinsurance-exp-implementationFlow14" doc:id="34847970-3bad-40ea-81c4-b85ede70626c" >
+		<http:request method="GET" doc:name="Request" doc:id="9f3dde5f-8087-45a8-be76-3dc52f1349f4" url="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" config-ref="HTTP_Request_configuration14">
+					<http:query-params><![CDATA[#[output application/java
+---
+{
+	lname : vars.lname,
+	dob : vars.dob
+}]]]></http:query-params>
+				</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="3e707aaf-8197-4b28-bbf5-3e3dd4a0865a">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	CustomerID: payload01.CustomerID,
+	first_name: payload01.first_name,
+	last_name: payload01.last_name,
+	DOB: payload01.DOB,
+	company_name: payload01.company_name,
+	address: payload01.address,
+	city: payload01.city,
+	county: payload01.county,
+	state: payload01.state,
+	zip: payload01.zip,
+	phone1: payload01.phone1
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+	</flow>
+	<flow name="muleinsurance-exp-implementationFlow13" doc:id="fccc9dd8-0956-484e-ac51-dcdeffe44235" >
+		<http:request method="GET" doc:name="Request" doc:id="367d7c50-5fc6-4843-9eb5-cd3811e9761a" url="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" config-ref="HTTP_Request_configuration13">
+					<http:query-params><![CDATA[#[output application/java
+---
+{
+	fname : vars.fname,
+	dob : vars.dob
+}]]]></http:query-params>
+				</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="ecb7262e-65b5-42bd-9384-8e2f2fe3ab30">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	CustomerID: payload01.CustomerID,
+	first_name: payload01.first_name,
+	last_name: payload01.last_name,
+	DOB: payload01.DOB,
+	company_name: payload01.company_name,
+	address: payload01.address,
+	city: payload01.city,
+	county: payload01.county,
+	state: payload01.state,
+	zip: payload01.zip,
+	phone1: payload01.phone1
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+	</flow>
+	<flow name="muleinsurance-exp-implementationFlow12" doc:id="03d21a03-c557-4c8f-a56d-68b2ebf1b895" >
+		<http:request method="GET" doc:name="Request" doc:id="09f33d83-0df9-4706-8fa3-1a2e7d6df12f" url="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" config-ref="HTTP_Request_configuration12">
+					<http:query-params><![CDATA[#[output application/java
+---
+{
+	fname : vars.fname,
+	lname : vars.lname
+}]]]></http:query-params>
+				</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="b19e51e0-13ec-409d-b746-ef4b19cdfe63">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	CustomerID: payload01.CustomerID,
+	first_name: payload01.first_name,
+	last_name: payload01.last_name,
+	DOB: payload01.DOB,
+	company_name: payload01.company_name,
+	address: payload01.address,
+	city: payload01.city,
+	county: payload01.county,
+	state: payload01.state,
+	zip: payload01.zip,
+	phone1: payload01.phone1
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+	</flow>
+	<flow name="muleinsurance-exp-implementationFlow11" doc:id="0972ce36-298e-47de-b1e0-ce97d90af9c7" >
+		<http:request method="GET" doc:name="Request" doc:id="30958d05-467a-41b1-bef3-83426359f2aa" url="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" config-ref="HTTP_Request_configuration11">
+					<reconnect />
+					<http:query-params><![CDATA[#[output application/java
+---
+{
+	fname : vars.fname,
+	lname : vars.lname,
+	dob : vars.dob
+}]]]></http:query-params>
+				</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="19944200-c98d-4bdb-be35-0143f418a089">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	CustomerID: payload01.CustomerID,
+	first_name: payload01.first_name,
+	last_name: payload01.last_name,
+	DOB: payload01.DOB,
+	company_name: payload01.company_name,
+	address: payload01.address,
+	city: payload01.city,
+	county: payload01.county,
+	state: payload01.state,
+	zip: payload01.zip,
+	phone1: payload01.phone1
+}
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="muleinsurance-exp-implementationFlow1" doc:id="873159e9-82be-46e6-8397-95ff4a3dcb6f" >
+		<choice doc:name="Choice" doc:id="68e09802-6482-4ecf-bd37-2c556ab15569" >
+			<when expression="#[vars.fname !=null and vars.lname !=null and vars.dob !=null]">
+				<flow-ref doc:name="Flow Reference" doc:id="eb86701f-6c89-4ffe-bb7a-eaa0bcde98fe" name="muleinsurance-exp-implementationFlow11" />
+			</when>
+			<when expression="#[vars.fname !=null and vars.lname !=null and vars.dob ==null]">
+				<flow-ref doc:name="Flow Reference" doc:id="46055a3d-eb99-43c1-82a5-9cda78bf4552" name="muleinsurance-exp-implementationFlow12" />
+			</when>
+			<when expression="#[vars.fname !=null and vars.lname ==null and vars.dob !=null]">
+				<flow-ref doc:name="Flow Reference" doc:id="42e86207-aa7b-4e9e-8220-695c59ebb354" name="muleinsurance-exp-implementationFlow13" />
+			</when>
+			<when expression="#[vars.fname ==null and vars.lname !=null and vars.dob !=null]">
+				<flow-ref doc:name="Flow Reference" doc:id="b6d63422-ba30-40ad-ae7b-1df7027288e6" name="muleinsurance-exp-implementationFlow14" />
+			</when>
+			<when expression="#[vars.fname !=null and vars.lname ==null and vars.dob ==null]">
+				<flow-ref doc:name="Flow Reference" doc:id="49deb6ee-dd74-4f96-a023-27d1864bf2da" name="muleinsurance-exp-implementationFlow15" />
+			</when>
+			<when expression="#[vars.fname ==null and vars.lname !=null and vars.dob ==null]">
+				<flow-ref doc:name="Flow Reference" doc:id="9b4aeafc-217d-408b-b44f-3e34af91decf" name="muleinsurance-exp-implementationFlow16" />
+			</when>
+			<when expression="#[vars.fname ==null and vars.lname ==null and vars.dob !=null]">
+				<flow-ref doc:name="Flow Reference" doc:id="871d0e30-9450-4611-ac93-b2ed0af64f2c" name="muleinsurance-exp-implementationFlow17" />
+			</when>
+		</choice>
+	</flow>
+</mule>

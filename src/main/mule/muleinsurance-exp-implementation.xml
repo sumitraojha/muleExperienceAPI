@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="muleinsurance-exp-implementationFlow" doc:id="e222715f-87ab-4604-8908-7a775e66cd9f" >
+		<set-variable value="#[attributes.queryParams.fname]" doc:name="FNAME" doc:id="c199e400-1419-4c08-a4a0-0cb6ba5914fb" variableName="fname" />
+		<set-variable value="#[attributes.queryParams.lname]" doc:name="LNAME" doc:id="32b8a0cc-fcad-4480-b473-164559818527" variableName="lname" />
+		<set-variable value="#[attributes.queryParams.dob]" doc:name="DOB" doc:id="b9ce4982-201e-4895-8930-856d0b50e59a" variableName="dob" />
+		<set-variable value="#[attributes.queryParams.customerID]" doc:name="CustomerID" doc:id="ad6eeed3-d1b0-4031-8337-2abd369bd138" variableName="customerID" />
+		<set-variable value="#[attributes.queryParams.policytype]" doc:name="PolicyType" doc:id="7f1804d1-c5e2-47f2-a7b0-331dd55f2b8d" variableName="policytype" />
+		<set-variable value="#[attributes.uriParams.searchString]" doc:name="Set Variable" doc:id="d3b3c479-b35a-403b-a3be-a946cb9eba11" variableName="searchString"/>
+		<choice doc:name="Choice" doc:id="444a5cd6-4aee-441a-8736-2d2fff681e2e" >
+			<when expression="#[vars.searchString == 'customer']">
+				<flow-ref doc:name="Flow Reference" doc:id="afa58d2b-16b5-4cf1-93db-60c224b7ed12" name="muleinsurance-exp-implementationFlow1"/>
+			</when>
+			<when expression="#[vars.searchString == 'policy']" doc:id="1ee50a4a-7180-4196-bb1e-7d1733a9bb7c">
+				<flow-ref doc:name="Flow Reference" doc:id="50967b04-9366-45d2-9b26-a6d40b280616" name="muleinsurance-exp-implementationFlow2"/>
+			</when>
+			<otherwise >
+				<ee:transform doc:name="Transform Message" doc:id="20b11f5c-6bf8-42d7-9653-6110f29a6a81" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+{
+	message:"not a valid uri"
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</otherwise>
+		</choice>
+	</flow>
+</mule>

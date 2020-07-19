@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:request-config name="HTTP_Request_configuration21" doc:name="HTTP Request configuration" doc:id="8c692f26-b451-41d1-bc9f-b255bf9de4c7" >
+		<http:request-connection host="http://demo-insurance-system-api.us-e2.cloudhub.io/policy" connectionIdleTimeout="300000" />
+	</http:request-config>
+	<http:request-config name="HTTP_Request_configuration22" doc:name="HTTP Request configuration" doc:id="6ede7a2a-d23b-426c-8509-d6fa8b014c92" >
+		<http:request-connection host="http://demo-insurance-system-api.us-e2.cloudhub.io/customer" connectionIdleTimeout="300000" />
+	</http:request-config>
+	<flow name="muleinsurance-exp-implementationFlow2" doc:id="a554ef82-20bb-47a6-9e0a-9776e44b0488" >
+		<choice doc:name="Choice" doc:id="9fd37637-b8a4-4d47-a373-0584d7265832" >
+			<when expression="#[vars.customerID !=null and vars.policytype ==null]">
+				<flow-ref doc:name="Flow Reference" doc:id="502aa4d0-4bdc-41ee-8cd9-09d80e79bd0c" name="muleinsurance-exp-implementationFlow21"/>
+			</when>
+			<when expression="#[vars.customerID !=null and vars.policytype !=null]">
+				<flow-ref doc:name="Flow Reference" doc:id="7e239796-1cae-4a96-b75f-6adebdbe9faa" name="muleinsurance-exp-implementationFlow22"/>
+			</when>
+		</choice>
+	</flow>
+	<flow name="muleinsurance-exp-implementationFlow21" doc:id="0dacf682-7663-498c-bb16-511656b4032e" >
+		<http:request method="GET" doc:name="Request" doc:id="165f463d-e2e2-4ee3-870d-db78cb3d990f" url="http://demo-insurance-system-api.us-e2.cloudhub.io/policy" config-ref="HTTP_Request_configuration21">
+					<http:query-params><![CDATA[#[output application/java
+---
+{
+	customerID : vars.customerID
+}]]]></http:query-params>
+				</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="545ee87d-e762-40e5-b1bd-2ba90351d852">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+	<flow name="muleinsurance-exp-implementationFlow22" doc:id="e9b695c2-0e37-4957-a6ff-3e7a1a550d53" >
+		<http:request method="GET" doc:name="Request" doc:id="fac6b320-4da9-4173-8917-534c73968c1c" url="http://demo-insurance-system-api.us-e2.cloudhub.io/policy" config-ref="HTTP_Request_configuration22">
+					<http:query-params><![CDATA[#[output application/java
+---
+{
+	policytype : vars.policytype,
+	customerID : vars.customerID
+}]]]></http:query-params>
+				</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="94591753-8b4c-4d60-815b-9851a674e3ae">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload
+]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+	</flow>
+</mule>
